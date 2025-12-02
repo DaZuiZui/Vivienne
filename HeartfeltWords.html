@@ -1,1 +1,364 @@
-<h1>HI this is Dazui</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>想对你说的话</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .header h1 {
+            color: #764ba2;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: #e0e0e0;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .container {
+            padding: 20px;
+            padding-bottom: 60px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.6s ease-out both;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .card-icon.heart { animation-delay: 0s; }
+        .card-icon.star { animation-delay: 0.3s; }
+        .card-icon.hand { animation-delay: 0.6s; }
+        .card-icon.rocket { animation-delay: 0.9s; }
+
+        .card-title {
+            color: #667eea;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .card-content {
+            color: #333;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .card-content p {
+            margin-bottom: 8px;
+        }
+
+        .card-highlight {
+            color: #764ba2;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .plan-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .plan-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .plan-text {
+            flex: 1;
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .closing-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 25px !important;
+        }
+
+        .closing-card .card-icon {
+            font-size: 50px;
+        }
+
+        .closing-card .card-title {
+            color: white;
+            font-size: 24px;
+        }
+
+        .closing-card .card-content {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce-down 2s ease-in-out infinite;
+            opacity: 0.7;
+            font-size: 24px;
+        }
+
+        @keyframes bounce-down {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        .scroll-indicator.hidden {
+            display: none;
+        }
+
+        /* 手机端优化 */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .container {
+                padding: 15px;
+                padding-bottom: 50px;
+            }
+
+            .card {
+                padding: 20px 18px;
+                margin-bottom: 15px;
+                border-radius: 15px;
+            }
+
+            .card-icon {
+                font-size: 35px;
+            }
+
+            .card-title {
+                font-size: 18px;
+            }
+
+            .card-content {
+                font-size: 14px;
+            }
+
+            .closing-card {
+                padding: 35px 20px !important;
+            }
+
+            .closing-card .card-icon {
+                font-size: 45px;
+            }
+
+            .closing-card .card-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌹 想对你说的话</h1>
+        <p>从心底里...</p>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 卡片1：我很爱你 -->
+        <div class="card">
+            <div class="card-icon heart">❤️</div>
+            <div class="card-title">我很爱你</div>
+            <div class="card-content">
+                <p>你知道吗？</p>
+                <p>每当我想起你，心就会不自觉地跳动。你的笑容、你的温柔、你的一切，都深深地烙在我心里。</p>
+                <p><span class="card-highlight">我爱你，不仅仅是说说而已。</span></p>
+            </div>
+        </div>
+
+        <!-- 卡片2：我很喜欢你 -->
+        <div class="card">
+            <div class="card-icon star">⭐</div>
+            <div class="card-title">我很喜欢你</div>
+            <div class="card-content">
+                <p>喜欢你的样子，</p>
+                <p>喜欢你说话时的认真，喜欢你开心时的笑容，喜欢你的可爱模样。</p>
+                <p>你的一切，我都喜欢。</p>
+            </div>
+        </div>
+
+        <!-- 卡片3：我会一直陪着你 -->
+        <div class="card">
+            <div class="card-icon hand">🤝</div>
+            <div class="card-title">我会一直陪着你</div>
+            <div class="card-content">
+                <p>无论晴天还是雨天，</p>
+                <p>无论开心还是难过，我都会在你身边。我承诺会用行动去证明，陪伴你走过每一个时刻。</p>
+                <p><span class="card-highlight">你不会孤单，因为有我。</span></p>
+            </div>
+        </div>
+
+        <!-- 卡片4：未来的计划 -->
+        <div class="card">
+            <div class="card-icon rocket">🚀</div>
+            <div class="card-title">我们的未来</div>
+            <div class="card-content">
+                <div class="plan-item">
+                    <div class="plan-number">1</div>
+                    <div class="plan-text">一起去看更多的风景，感受世界的美好</div>
+                </div>
+                <div class="plan-item">
+                    <div class="plan-number">2</div>
+                    <div class="plan-text">陪你经历生活中的每一个重要时刻</div>
+                </div>
+                <div class="plan-item">
+                    <div class="plan-number">3</div>
+                    <div class="plan-text">一起创造属于我们的回忆和故事</div>
+                </div>
+                <div class="plan-item">
+                    <div class="plan-number">4</div>
+                    <div class="plan-text">永远站在你身后，支持你的梦想</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 卡片5：更多承诺 -->
+        <div class="card">
+            <div class="card-icon">💫</div>
+            <div class="card-title">对你的承诺</div>
+            <div class="card-content">
+                <p>✨ 我会珍惜你，珍惜我们在一起的每一秒</p>
+                <p>✨ 我会用心去爱你，不会敷衍你。</p>
+                <p>✨ 无论发生什么，我都不会放弃</p>
+            </div>
+        </div>
+
+        <!-- 结尾卡片 -->
+        <div class="card closing-card">
+            <div class="card-icon">💕</div>
+            <div class="card-title">永远爱你</div>
+            <div class="card-content">
+                <p>所以，谢谢你选择和我在一起。</p>
+                <p>我会用余生去爱你。</p>
+                <p>我们的故事开始于10-25 2025</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">👇</div>
+
+    <script>
+        // 进度条随滚动更新
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.querySelector('.progress-fill').style.width = scrollPercent + '%';
+
+            // 隐藏滚动指示器
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            if (scrollTop > 100) {
+                scrollIndicator.classList.add('hidden');
+            } else {
+                scrollIndicator.classList.remove('hidden');
+            }
+        });
+
+        // 页面加载完成后的初始化
+        window.addEventListener('load', () => {
+            // 可以添加额外的交互效果
+        });
+    </script>
+</body>
+</html>
